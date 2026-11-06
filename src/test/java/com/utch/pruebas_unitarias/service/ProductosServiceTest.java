@@ -140,4 +140,22 @@ class ProductoServiceTest {
         assertThrows(ProductoNoEncontradoException.class, () -> service.eliminar(99L));
         verify(repository, never()).deleteById(any());
     }
+
+        @Test
+    @DisplayName("guardar: lanza excepción si el nombre es null")
+    void guardar_nombreNull_lanzaExcepcion() {
+        Producto invalido = new Producto(null, null, 100.0, 1);
+
+        assertThrows(IllegalArgumentException.class, () -> service.guardar(invalido));
+        verify(repository, never()).save(any());
+    }
+
+    @Test
+    @DisplayName("guardar: lanza excepción si el precio es null")
+    void guardar_precioNull_lanzaExcepcion() {
+        Producto invalido = new Producto(null, "Monitor", null, 1);
+
+        assertThrows(IllegalArgumentException.class, () -> service.guardar(invalido));
+        verify(repository, never()).save(any());
+    }
 }
